@@ -36,12 +36,11 @@ else:
     interests = "interests_demo.xlsx"
     master_data = "master_data_demo.xlsx"
 
-prengers = \
-    Household(123,  # id_num
-              "1", 6,  # building
-              "3", 3,  # floor
-              "45", 10,  # neighbour
-              "False", 1,  # small_flat
-              "close", 7)  # animal
+exampleList = [Household(123,  # id_num
+                         "1", 6,  # building
+                         "3", 3,  # floor
+                         "45", 10,  # neighbour
+                         "False", 1,  # small_flat
+                         "close", 7)]  # animal
 
 str(prengers)
