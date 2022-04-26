@@ -1,8 +1,8 @@
 # gw-flat-distribution
 Bei diesem Python Script handelt es sich die Umsetzung einer Optimierungsfunktion, um die optimale Verteilung von 
-begrenzten 
+Wohnungen nach den von den Haushalten geäußerten Präferenzen. [(Pareto-Optimierung)](https://de.wikipedia.org/wiki/Pareto-Optimierung)
 
-[Pareto-Optimierung](https://de.wikipedia.org/wiki/Pareto-Optimierung)
+Aktuell handelt es sich nur um ein Konzept und das Python Script ist noch zu schreiben.
 
 ## mögliche Kriterien:
 * Gebäude
@@ -86,7 +86,11 @@ Dazu können wie beim Scoring die Einzelfunktionen einfach aufsummiert werden.
 * Je Funktion ist jedoch noch eine Gewichtung zu ergänzen, da nicht jeder Haushalt die Kriterien gleichgewichten wird.
 * Man könnte auch zusätzlich eine Gewichtung der Belegungskommission ergänzen, falls sich dafür ein Argument aus den 
 Belegungskriterien ergeben sollte
-
+* Eine Optimierung erfolgt auf paarweises Tauschen von Haushalten und einem erneuten Prüfen der Zielfunktion auf eine 
+Verbesserung.
+* Die initiale Verteilung sollte möglichst zufällig sein.
+  * Um ein globales und nicht nur ein lokales Optimum zu finden, sollte die Optimierung mehrmals mit unterschiedlichen 
+  Startverteilungen durchlaufen werden
 
 ## Nebenbedingungen
 * kein Haushalt darf komplett schlecht darstehen &rarr; Zufriedenheit bei einem einzelnen Haushalt darf nicht < 0.1 sein
