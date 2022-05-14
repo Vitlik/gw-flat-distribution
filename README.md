@@ -18,6 +18,8 @@ Aktuell handelt es sich nur um ein Konzept und das Python Script ist noch zu sch
       * Haustierwunsch
     * Eher weit weg von Tieren
       * Allergie
+* RolliBad benötigt
+
 
 ## Allgemeines
 * Zufriedenheit eines Haushalts ist auf Werte zwischen 0 und 1 zu normieren
@@ -84,6 +86,8 @@ Jedes Kriterium kann einzeln optimiert werden. Die einzelnen Optimierungsfunktio
 Für eine Optimierungsfunktion müssen alle Funktionen zusammengebracht werden.
 Dazu können wie beim Scoring die Einzelfunktionen einfach aufsummiert werden.
 * Je Funktion ist jedoch noch eine Gewichtung zu ergänzen, da nicht jeder Haushalt die Kriterien gleichgewichten wird.
+* Bonusgewicht für Engagement - erfüllen von Wünschen von engagierten Mitgliedern bringt mehr Glück
+  * Engagementbewertung wie bei Wohnraumreservierung
 * Man könnte auch zusätzlich eine Gewichtung der Belegungskommission ergänzen, falls sich dafür ein Argument aus den 
 Belegungskriterien ergeben sollte
 * Eine Optimierung erfolgt auf paarweises Tauschen von Haushalten und einem erneuten Prüfen der Zielfunktion auf eine 
@@ -97,4 +101,3 @@ Verbesserung.
   * Im Gegensatz zur Optimierungsfunktion muss hierfür die Gewichtung normiert werden. Sonst kann die Bedingung bei Haushalten, denen alles egal ist (Gewichtung überall = 0) nicht erfüllt werden 
 * Bei Allergien ist ein Mindestabstand zu Tieren einzuhalten &rarr; Distanz zu Tierwohnungen > **MinAllergikerDistanz** 
   * Hier könnte beim Wunsch auf Distanz auch eine minimale Distanz als Nebenbedingung ergänzen
-
