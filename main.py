@@ -1,7 +1,7 @@
 import pickle
 import sys
 from os.path import exists
-
+from datetime import datetime
 from util.Calculator import init_distribution, calc_happiness
 from util.Optimizer import optimize_allocations
 from util.Reader import read_source
@@ -35,9 +35,16 @@ def main_method():
     max_happiness = calc_happiness(list_hh_wishes, list_flats, list_weights, list_allocations)
     save_data(file, list_hh_wishes, list_flats, list_allocations, max_happiness, False)
     save_allocation(list_allocations, str(round(max_happiness, 4)))
-    print("--------------------------------------")
 
 
 if __name__ == '__main__':
+    full_start = datetime.now()
     for i in range(10):
+        start = datetime.now()
         main_method()
+        diff = datetime.now() - start
+        print(str(diff.seconds / 60) + " mins")
+        print("--------------------------------------")
+    full_diff = datetime.now() - full_start
+    print("--------------------------------------")
+    print(str(full_diff.seconds / 60) + " mins")
