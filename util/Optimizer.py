@@ -1,6 +1,7 @@
 import copy
 
 from util.Calculator import calc_happiness
+from util.Writer import save_allocation
 from util.helper import swap_flats
 
 
@@ -30,6 +31,7 @@ def optimize_allocations(hh_wishes, flats, weights, allocations):
                         swap_happened = True
                         best_allocation = copy.deepcopy(current_allocations)
                         max_happiness = copy.deepcopy(new_happiness)
+                        save_allocation(best_allocation, "_tmp")  # secure progress
                         break
                     else:
                         current_allocations = copy.deepcopy(best_allocation)

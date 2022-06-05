@@ -1,6 +1,8 @@
 import re
 from openpyxl import load_workbook
 from objects import Household, Flat
+from objects.Allocation import Allocation
+from objects.HappyNumbers import HappyNumbers
 
 
 def read_source(file, list_hh_wishes, list_flats, list_weights):
@@ -48,3 +50,27 @@ def read_source(file, list_hh_wishes, list_flats, list_weights):
     last_col_gew = re.search(r'(?<=:)[A-Z]*', config.tables["gewichte_tab"].ref).group()
     for row in range(first_row_gew, last_row_gew + 1):
         list_weights[config[first_col_gew + str(row)].value] = int(config[last_col_gew + str(row)].value)
+
+
+def read_results(file, allocations):
+    wb = load_workbook(file)
+
+    ws_alloc = wb["Zuordnungen"]
+    last_row = int(re.search(r'\d*$', ws_alloc.dimensions).group(0))
+    for row in range(5, last_row + 1):
+        allocations[ws_alloc["A" + str(row)].value] = \
+            Allocation(
+                ws_alloc["A" + str(row)].value,
+                ws_alloc["B" + str(row)].value
+            )
+        if int(ws_alloc["A" + str(row)].value) <= 9000:
+            allocations[ws_alloc["A" + str(row)].value].happy_numbers = \
+                HappyNumbers(ws_alloc["C" + str(row)].value,
+                             ws_alloc["D" + str(row)].value,
+                             ws_alloc["E" + str(row)].value,
+                             ws_alloc["F" + str(row)].value,
+                             ws_alloc["G" + str(row)].value,
+                             ws_alloc["H" + str(row)].value)
+        else:
+            allocations[ws_alloc["A" + str(row)].value].happy_numbers = \
+                HappyNumbers(0, 0, 0, 0, 0, 0)

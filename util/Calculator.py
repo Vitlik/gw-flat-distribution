@@ -1,4 +1,5 @@
 import copy
+from random import randrange
 
 from objects.Allocation import Allocation
 from objects.HappyNumbers import HappyNumbers
@@ -6,21 +7,62 @@ from objects.HappyNumbers import HappyNumbers
 
 def init_distribution(hh_wishes, flats, allocations):
     print("Doing: init_distribution")
-    allocated_flats = {}
-    free_wg = 0
+    flat1 = []
+    flat2 = []
+    flat3 = []
+    flat4 = []
+    flat5 = []
+    flat3k = []
+
+    for flat_id in flats:
+        if flats[flat_id].flat_type == "1,5 ZiWg":
+            flat1.append(flat_id)
+        elif flats[flat_id].flat_type == "2,5 ZiWg":
+            flat2.append(flat_id)
+        elif flats[flat_id].flat_type == "3,5 ZiWg":
+            flat3.append(flat_id)
+        elif flats[flat_id].flat_type == "4,5 ZiWg":
+            flat4.append(flat_id)
+        elif flats[flat_id].flat_type == "5,5 ZiWg":
+            flat5.append(flat_id)
+        elif flats[flat_id].flat_type == "3,5 ZiWg klein":
+            flat3k.append(flat_id)
+
     for hh_id in hh_wishes:
-        for flat_id in flats:
-            if not allocated_flats.__contains__(flat_id) and hh_wishes[hh_id].flat_type == flats[flat_id].flat_type:
-                free_wg = copy.deepcopy(flats[flat_id].id)
-                break
-        allocations[hh_wishes[hh_id].id] = copy.deepcopy(Allocation(hh_wishes[hh_id].id, free_wg))
-        allocations[hh_wishes[hh_id].id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
-        allocated_flats[free_wg] = None
-    for flat_id2 in flats:
-        if not allocated_flats.__contains__(flat_id2):
-            allocations[9000 + flat_id2] = copy.deepcopy(Allocation(9000 + flat_id2, flat_id2))
-            allocations[9000 + flat_id2].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
-            allocated_flats[free_wg] = None
+        if hh_wishes[hh_id].flat_type == "1,5 ZiWg":
+            num = randrange(0, len(flat1))
+            allocations[hh_id] = Allocation(hh_id, flat1[num])
+            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+            flat1.remove(flat1[num])
+        elif hh_wishes[hh_id].flat_type == "2,5 ZiWg":
+            num = randrange(0, len(flat2))
+            allocations[hh_id] = Allocation(hh_id, flat2[num])
+            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+            flat2.remove(flat2[num])
+        elif hh_wishes[hh_id].flat_type == "3,5 ZiWg":
+            num = randrange(0, len(flat3))
+            allocations[hh_id] = Allocation(hh_id, flat3[num])
+            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+            flat3.remove(flat3[num])
+        elif hh_wishes[hh_id].flat_type == "4,5 ZiWg":
+            num = randrange(0, len(flat4))
+            allocations[hh_id] = Allocation(hh_id, flat4[num])
+            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+            flat4.remove(flat4[num])
+        elif hh_wishes[hh_id].flat_type == "5,5 ZiWg":
+            num = randrange(0, len(flat5))
+            allocations[hh_id] = Allocation(hh_id, flat5[num])
+            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+            flat5.remove(flat5[num])
+        elif hh_wishes[hh_id].flat_type == "3,5 ZiWg klein":
+            num = randrange(0, len(flat3k))
+            allocations[hh_id] = Allocation(hh_id, flat3k[num])
+            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+            flat3k.remove(flat3k[num])
+
+    for flat_id2 in flat1 + flat2 + flat3 + flat4 + flat5 + flat3k:
+        allocations[9000 + flat_id2] = Allocation(9000 + flat_id2, flat_id2)
+        allocations[9000 + flat_id2].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
 
 
 def calc_distance(flat1, flat2):
