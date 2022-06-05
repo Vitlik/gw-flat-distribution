@@ -8,7 +8,7 @@ Aktuell handelt es sich nur um ein Konzept und das Python Script ist noch zu sch
 * Gebäude
 * Etage
   * 2 Ausprägungen: lieber höher gelegen ***oder*** lieber tiefer gelegen
-* Nähe zu bestimmten Haushalten
+* Nähe zu bestimmtem Haushalt
 * Wohnungsgröße eher kleiner
   * nicht alle Wohnungen gleich in einer Klasse (z.B. 1,5 ZiWg)
   * Es soll nur die Option geben eine „eher kleine Wohnung aus finanziellen Gründen“ auswählen zu können
@@ -19,7 +19,7 @@ Aktuell handelt es sich nur um ein Konzept und das Python Script ist noch zu sch
     * Eher weit weg von Tieren
       * Allergie
 * RolliBad benötigt
-
+* Konkrete Wohnung
 
 ## Allgemeines
 * Zufriedenheit eines Haushalts ist auf Werte zwischen 0 und 1 zu normieren
