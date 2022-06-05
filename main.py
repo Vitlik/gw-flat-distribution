@@ -35,6 +35,7 @@ def main_method():
     max_happiness = calc_happiness(list_hh_wishes, list_flats, list_weights, list_allocations)
     save_data(file, list_hh_wishes, list_flats, list_allocations, max_happiness, False)
     save_allocation(list_allocations, str(round(max_happiness, 4)))
+    print("--------------------------------------")
 
 
 if __name__ == '__main__':

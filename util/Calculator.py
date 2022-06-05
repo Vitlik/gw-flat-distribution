@@ -6,7 +6,6 @@ from objects.HappyNumbers import HappyNumbers
 
 
 def init_distribution(hh_wishes, flats, allocations):
-    print("Doing: init_distribution")
     flat1 = []
     flat2 = []
     flat3 = []
