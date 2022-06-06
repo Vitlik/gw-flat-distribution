@@ -31,37 +31,37 @@ def init_distribution(hh_wishes, flats, allocations):
         if hh_wishes[hh_id].flat_type == "1,5 ZiWg":
             num = randrange(0, len(flat1))
             allocations[hh_id] = Allocation(hh_id, flat1[num])
-            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0)
             flat1.remove(flat1[num])
         elif hh_wishes[hh_id].flat_type == "2,5 ZiWg":
             num = randrange(0, len(flat2))
             allocations[hh_id] = Allocation(hh_id, flat2[num])
-            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0)
             flat2.remove(flat2[num])
         elif hh_wishes[hh_id].flat_type == "3,5 ZiWg":
             num = randrange(0, len(flat3))
             allocations[hh_id] = Allocation(hh_id, flat3[num])
-            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0)
             flat3.remove(flat3[num])
         elif hh_wishes[hh_id].flat_type == "4,5 ZiWg":
             num = randrange(0, len(flat4))
             allocations[hh_id] = Allocation(hh_id, flat4[num])
-            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0)
             flat4.remove(flat4[num])
         elif hh_wishes[hh_id].flat_type == "5,5 ZiWg":
             num = randrange(0, len(flat5))
             allocations[hh_id] = Allocation(hh_id, flat5[num])
-            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0)
             flat5.remove(flat5[num])
         elif hh_wishes[hh_id].flat_type == "3,5 ZiWg klein":
             num = randrange(0, len(flat3k))
             allocations[hh_id] = Allocation(hh_id, flat3k[num])
-            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+            allocations[hh_id].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0)
             flat3k.remove(flat3k[num])
 
     for flat_id2 in flat1 + flat2 + flat3 + flat4 + flat5 + flat3k:
         allocations[9000 + flat_id2] = Allocation(9000 + flat_id2, flat_id2)
-        allocations[9000 + flat_id2].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0)
+        allocations[9000 + flat_id2].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0)
 
 
 def calc_distance(flat1, flat2):
@@ -69,7 +69,6 @@ def calc_distance(flat1, flat2):
 
 
 def calc_happiness(hh_wishes, flats, weights, allocations):
-    happiness = 0
     for alloc in allocations:
         if alloc <= 9000:
             hh = hh_wishes[alloc]
@@ -149,13 +148,23 @@ def calc_happiness(hh_wishes, flats, weights, allocations):
             else:
                 allocations[alloc].happy_numbers.specific_flat_pref = 0
 
+            # wheelchair preference
+            if hh.wheelchair_suitable == "Ja" and flat.wheelchair_suitable == "Ja":
+                allocations[alloc].happy_numbers.wheelchair_pref = 1 * (int(hh.wheelchair_suitable_weight) / 10) * weights[
+                    "rollitauglich"]
+            else:
+                allocations[alloc].happy_numbers.small_flat_pref = 0
+
     # calc overall happiness
+    happiness = 0
     for alloc in allocations:
-        happiness = happiness \
-                    + allocations[alloc].happy_numbers.building_pref \
-                    + allocations[alloc].happy_numbers.floor_pref \
-                    + allocations[alloc].happy_numbers.neighbour_pref \
-                    + allocations[alloc].happy_numbers.small_flat_pref \
-                    + allocations[alloc].happy_numbers.animal_pref \
-                    + allocations[alloc].happy_numbers.specific_flat_pref
+        if alloc <= 9000:
+            happiness = happiness \
+                        + allocations[alloc].happy_numbers.building_pref \
+                        + allocations[alloc].happy_numbers.floor_pref \
+                        + allocations[alloc].happy_numbers.neighbour_pref \
+                        + allocations[alloc].happy_numbers.small_flat_pref \
+                        + allocations[alloc].happy_numbers.animal_pref \
+                        + allocations[alloc].happy_numbers.specific_flat_pref \
+                        + allocations[alloc].happy_numbers.wheelchair_pref
     return happiness

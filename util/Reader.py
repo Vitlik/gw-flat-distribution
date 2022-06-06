@@ -27,7 +27,8 @@ def read_source(file, list_hh_wishes, list_flats, list_weights):
                 hh_wishes["L" + str(row)].value,
                 hh_wishes["M" + str(row)].value,
                 hh_wishes["N" + str(row)].value,
-                hh_wishes["O" + str(row)].value
+                hh_wishes["O" + str(row)].value,
+                hh_wishes["P" + str(row)].value
             )
 
     ws_flat_data = wb.worksheets[1]
@@ -70,7 +71,8 @@ def read_results(file, allocations):
                              ws_alloc["E" + str(row)].value,
                              ws_alloc["F" + str(row)].value,
                              ws_alloc["G" + str(row)].value,
-                             ws_alloc["H" + str(row)].value)
+                             ws_alloc["H" + str(row)].value,
+                             ws_alloc["I" + str(row)].value)
         else:
             allocations[ws_alloc["A" + str(row)].value].happy_numbers = \
-                HappyNumbers(0, 0, 0, 0, 0, 0)
+                HappyNumbers(0, 0, 0, 0, 0, 0, 0)

@@ -15,6 +15,7 @@ class Household(object):
     specific_flat_pref = None
     specific_flat_weight = None
     wheelchair_suitable = None
+    wheelchair_suitable_weight = None
 
     def __init__(self, id,
                  wohn_art,
@@ -24,7 +25,7 @@ class Household(object):
                  small_flat_pref, small_flat_weight,
                  animal_pref, animal_weight,
                  specific_flat_pref, specific_flat_weight,
-                 wheelchair_suitable):
+                 wheelchair_suitable, wheelchair_suitable_weight):
         self.id = id
         self.flat_type = wohn_art
         self.building_pref = building_pref
@@ -40,6 +41,7 @@ class Household(object):
         self.specific_flat_pref = specific_flat_pref
         self.specific_flat_weight = specific_flat_weight
         self.wheelchair_suitable = wheelchair_suitable
+        self.wheelchair_suitable_weight = wheelchair_suitable_weight
 
     def __str__(self):
         return str(self.id) + ' is with' \
@@ -51,4 +53,5 @@ class Household(object):
                + ' | animal_pref: ' + str(self.animal_pref) + ' | animal_weight: ' + str(self.animal_weight) \
                + ' | specific_flat_pref: ' + str(self.specific_flat_pref) + ' | specific_flat_weight: ' \
                + str(self.specific_flat_weight) \
-               + ' | wheelchair_suitable: ' + str(self.wheelchair_suitable)
+               + ' | wheelchair_suitable: ' + str(self.wheelchair_suitable) \
+               + ' | wheelchair_suitable_weight: ' + str(self.wheelchair_suitable_weight)
