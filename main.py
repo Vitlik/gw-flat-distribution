@@ -18,11 +18,12 @@ def main_method():
     if len(sys.argv) > 1:
         file = sys.argv[1]
     else:
-        file = "Haushaltsinteressen.xlsx"
+        file = "datasources/2022-07-21_results-survey2704_korrigiert.xlsx"
+        file2 = "datasources/WgDaten.xlsx"
 
-    read_source(file, list_hh_wishes, list_flats, list_weights)
+    read_source(file, file2, list_hh_wishes, list_flats, list_weights)
 
-    pickel_file = "allocations_100.5333.pkl"
+    pickel_file = "datasources/allocations_267.1.pkl"
     if exists(pickel_file):
         print("Previous allocation found. Loading existing allocation: " + pickel_file)
         with open(pickel_file, "rb") as inp:
@@ -30,13 +31,12 @@ def main_method():
     else:
         print("No previous allocation found. Initializing new allocation.")
         init_distribution(list_hh_wishes, list_flats, list_allocations)
-    # max_happiness = calc_happiness(list_hh_wishes, list_flats, list_weights, list_allocations)
-    # swap_flats(list_allocations[1].hh_id, list_allocations[2].hh_id, list_allocations)
-    # new_happiness = calc_happiness(list_hh_wishes, list_flats, list_weights, list_allocations)
+        # save_allocation(list_allocations, "init")
+
     list_allocations = optimize_allocations(list_hh_wishes, list_flats, list_weights, list_allocations)
     max_happiness = calc_happiness(list_hh_wishes, list_flats, list_weights, list_allocations)
     save_allocation(list_allocations, str(round(max_happiness, 4)))
-    # save_data_to_xlsx(file, list_hh_wishes, list_flats, list_allocations, max_happiness, False)
+    save_data_to_xlsx(file, list_hh_wishes, list_flats, list_allocations, max_happiness, "")
 
 
 if __name__ == '__main__':
