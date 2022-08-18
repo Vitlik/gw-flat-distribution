@@ -20,7 +20,7 @@ def optimize_allocations(hh_wishes, flats, weights, allocations):
                 if alloc_main < 1000 and alloc_main < alloc_sec \
                         and flats[current_allocations[alloc_main].wg_id].flat_type == \
                         flats[current_allocations[alloc_sec].wg_id].flat_type:
-                    swap_flats(alloc_main, alloc_sec, current_allocations)
+                    swap_flats(alloc_main, alloc_sec, current_allocations, flats)
                     new_happiness = calc_happiness(hh_wishes, flats, weights, current_allocations)
                     if new_happiness > max_happiness:
                         print(

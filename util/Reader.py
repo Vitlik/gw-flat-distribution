@@ -1,11 +1,13 @@
 import re
 from openpyxl import load_workbook
+from openpyxl.utils import get_column_letter
+
 from objects import Household, Flat
 from objects.Allocation import Allocation
 from objects.HappyNumbers import HappyNumbers
 
 
-def read_source(file, file2, list_hh_wishes, list_flats, list_weights):
+def read_source(file, file2, list_hh_wishes, list_flats, list_weights, weights_from_first=False):
 
     wb = load_workbook(file, data_only=True)
     hh_wishes = wb.worksheets[0]
@@ -16,6 +18,8 @@ def read_source(file, file2, list_hh_wishes, list_flats, list_weights):
                 hh_wishes["A" + str(row)].value,  # id
                 hh_wishes["G" + str(row)].value,  # name
                 hh_wishes["J" + str(row)].value,  # flat-type
+                hh_wishes["BA" + str(row)].value,  # wbs
+                hh_wishes["BB" + str(row)].value,  # engagement
 
                 hh_wishes["K" + str(row)].value,  # punkt, ...
                 hh_wishes["L" + str(row)].value,
@@ -60,30 +64,38 @@ def read_source(file, file2, list_hh_wishes, list_flats, list_weights):
                 hh_wishes["AS" + str(row)].value
             )
 
+        if list_hh_wishes[hh_wishes["A" + str(row)].value].engagement is None:
+            list_hh_wishes[hh_wishes["A" + str(row)].value].engagement = 0
+
     wb2 = load_workbook(file2, data_only=True)
     ws_flat_data = wb2.worksheets[0]
     last_row_wohndaten = int(re.search(r'\d*$', ws_flat_data.dimensions).group(0))
     for row in range(2, last_row_wohndaten + 1):
         list_flats[ws_flat_data["A" + str(row)].value] = \
             Flat.Flat(
-                ws_flat_data["A" + str(row)].value,
-                ws_flat_data["B" + str(row)].value,
-                ws_flat_data["C" + str(row)].value,
-                ws_flat_data["D" + str(row)].value,
-                ws_flat_data["E" + str(row)].value,
-                ws_flat_data["F" + str(row)].value,
-                ws_flat_data["H" + str(row)].value,
-                ws_flat_data["I" + str(row)].value
+                ws_flat_data["A" + str(row)].value,  # WohnungsID
+                ws_flat_data["B" + str(row)].value,  # Art
+                ws_flat_data["C" + str(row)].value,  # Gebäude
+                ws_flat_data["D" + str(row)].value,  # Etage
+                ws_flat_data["E" + str(row)].value,  # qm
+                ws_flat_data["F" + str(row)].value,  # Kleine_Wg
+                ws_flat_data["G" + str(row)].value,  # WBS
+                ws_flat_data["H" + str(row)].value,  # Rollitauglich
+                ws_flat_data["I" + str(row)].value  # Vergabe
             )
 
-    config = wb2.worksheets[1]
-    first_row_gew = int(re.search(r'[0-9]{1,4}(?=:)', config.tables["gewichte_tab"].ref).group()) + 1
-    first_col_gew = re.search(r'^[A-Z]{1,4}', config.tables["gewichte_tab"].ref).group()
-    last_row_gew = int(re.search(r'[0-9]{1,4}$', config.tables["gewichte_tab"].ref).group())
-    last_col_gew = re.search(r'(?<=:)[A-Z]*', config.tables["gewichte_tab"].ref).group()
-    for row in range(first_row_gew, last_row_gew + 1):
-        list_weights[config[first_col_gew + str(row)].value] = float(config[last_col_gew + str(row)].value)
-
+    if not weights_from_first:
+        config = wb2.worksheets[1]
+        first_row_gew = int(re.search(r'[0-9]{1,4}(?=:)', config.tables["gewichte_tab"].ref).group()) + 1
+        first_col_gew = re.search(r'^[A-Z]{1,4}', config.tables["gewichte_tab"].ref).group()
+        last_row_gew = int(re.search(r'[0-9]{1,4}$', config.tables["gewichte_tab"].ref).group())
+        last_col_gew = re.search(r'(?<=:)[A-Z]*', config.tables["gewichte_tab"].ref).group()
+        for row in range(first_row_gew, last_row_gew + 1):
+            list_weights[config[first_col_gew + str(row)].value] = float(config[last_col_gew + str(row)].value)
+    else:
+        ws_alloc = wb["Zuordnungen"]
+        for col in range(5,24):
+            list_weights[ws_alloc[get_column_letter(col) + str(1)].value] = float(ws_alloc[get_column_letter(col) + str(2)].value)
 
 def read_results(file, allocations):
     wb = load_workbook(file)

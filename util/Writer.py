@@ -7,33 +7,56 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.utils import get_column_letter
 
 
-def save_data_to_xlsx(file, hh_wishes, flats, allocations, max_happiness, swapping):
+def save_data_to_xlsx(file, hh_wishes, flats, allocations, weights, max_happiness, swapping):
     wb = load_workbook(file)
 
-    if not swapping:
-        ws = wb.create_sheet("Zuordnungen")
-        wb.active = wb["Zuordnungen"]
-    else:
-        ws = wb.create_sheet("Zuordnungen_" + swapping)
-        wb.active = wb["Zuordnungen_" + swapping]
+    sheet_name = "Zuordnungen" + swapping
+    ws = wb.create_sheet(sheet_name)
 
-    ws.append(["Maximales Glück:"])
-    ws.append([round(max_happiness, 4)])
+    # wechsle aktiven Tab
+    wb.active = wb[sheet_name]
+    for sheet in wb:
+        if sheet.title == sheet_name:
+            sheet.sheet_view.tabSelected = True
+        else:
+            sheet.sheet_view.tabSelected = False
+
+    ws.append(["Maximales Glück:", "", "", "Gewichte:", "Punkt",	"Winkel",	"Riegel",	"EG",	"1OG",	"2OG",	"3OG",
+              "Nachbar",	"kleine_wg",	"Hund",	"Hundeallergie",	"Katze",	"Katzenallergie",	"konkrete_wg1",
+              "konkrete_wg2",	"konkrete_wg3",	"rollitauglich",	"Raucher",	"WBS-AB"])
+    ws.append([round(max_happiness, 4), "", "", "", weights["Punkt"],	weights["Winkel"],	weights["Riegel"],
+              weights["EG"],	weights["1OG"],	weights["2OG"],	weights["3OG"],	weights["Nachbar"],	weights["kleine_wg"],
+              weights["Hund"],	weights["Hundeallergie"],	weights["Katze"],	weights["Katzenallergie"],
+              weights["konkrete_wg1"],	weights["konkrete_wg2"],	weights["konkrete_wg3"],	weights["rollitauglich"],
+              weights["Raucher"],	weights["WBS-AB"]])
     ws.append([""])
+    tabHead = Table(displayName="weights", ref="D1:" + get_column_letter(23) + "2")
+
+    # Lege Tabellen Stil fest (striped rows and banded columns)
+    style = TableStyleInfo(name="TableStyleMedium2", showFirstColumn=False,
+                           showLastColumn=False, showRowStripes=True, showColumnStripes=False)
+    tabHead.tableStyleInfo = style
 
     ws["A2"].alignment = Alignment(horizontal='center')
     ws["A2"].fill = PatternFill("solid", start_color="92D050")
 
-    ws.append(["HaushaltsID", "WohnungsID", "Größe", "Summe",
+    ws.append(["HaushaltsID", "WohnungsID", "Name", "Größe", "Summe",
                "Punkt_Glück", "Winkel_Glück", "Riegel_Glück", "EG_Glück", "OG1_Glück", "OG2_Glück", "OG3_Glück",
                "kleiWg_Glück", "Rolli_Glück", "Nachbar_Glück", "HundNähe_Glück", "KatzenNähe_Glück", "RaucherNähe_Glück",
-               "Wg_Glück"])
+               "Wg_Glück", "WBS", " ",
+               "1. unerfüllter wichtiger Wunsch (4 oder 5)", "2. unerfüllter wichtiger Wunsch (4 oder 5)",
+               "3. unerfüllter wichtiger Wunsch (4 oder 5)", "4. unerfüllter wichtiger Wunsch (4 oder 5)",
+               "5. unerfüllter wichtiger Wunsch (4 oder 5)",
+               "WBS Änderung"])
 
     counter = 4
     for alloc in allocations:
         if alloc < 1000:
             ws.append(
-                [allocations[alloc].hh_id, allocations[alloc].wg_id, flats[allocations[alloc].wg_id].flat_type,
+                [allocations[alloc].hh_id,
+                 allocations[alloc].wg_id,
+                 hh_wishes[alloc].name,
+                 flats[allocations[alloc].wg_id].flat_type,
                  # sum column
                  allocations[alloc].happy_numbers.sum,
                  # building wish
@@ -57,27 +80,18 @@ def save_data_to_xlsx(file, hh_wishes, flats, allocations, max_happiness, swappi
                  # smoker wisch
                  allocations[alloc].happy_numbers.smoker,
                  # specific flat wisch
-                 allocations[alloc].happy_numbers.specific_flat
-                 # "",
-                 # actual prefs
-                 # hh_wishes[allocations[alloc].hh_id].building_pref,
-                 # hh_wishes[allocations[alloc].hh_id].building_weight,
-                 # flats[allocations[alloc].wg_id].building,
-                 # hh_wishes[allocations[alloc].hh_id].floor_pref,
-                 # hh_wishes[allocations[alloc].hh_id].floor_weight,
-                 # flats[allocations[alloc].wg_id].floor,
-                 # hh_wishes[allocations[alloc].hh_id].neighbour_pref,
-                 # hh_wishes[allocations[alloc].hh_id].neighbour_weight,
-                 # hh_wishes[allocations[alloc].hh_id].small_flat_pref,
-                 # hh_wishes[allocations[alloc].hh_id].small_flat_weight,
-                 # flats[allocations[alloc].wg_id].small,
-                 # hh_wishes[allocations[alloc].hh_id].animal_pref,
-                 # hh_wishes[allocations[alloc].hh_id].animal_weight,
-                 # allocations[alloc].happy_numbers.distance_to_next_animal,
-                 # hh_wishes[allocations[alloc].hh_id].specific_flat_pref,
-                 # hh_wishes[allocations[alloc].hh_id].specific_flat_weight,
-                 # hh_wishes[allocations[alloc].hh_id].wheelchair_suitable,
-                 # hh_wishes[allocations[alloc].hh_id].wheelchair_suitable_weight
+                 allocations[alloc].happy_numbers.specific_flat,
+                 # fitting wbs allocation
+                 allocations[alloc].happy_numbers.wbs,
+                 "",
+                 # unfulfilled wishes
+                 allocations[alloc].happy_numbers.unfulfilled_wish1,
+                 allocations[alloc].happy_numbers.unfulfilled_wish2,
+                 allocations[alloc].happy_numbers.unfulfilled_wish3,
+                 allocations[alloc].happy_numbers.unfulfilled_wish4,
+                 allocations[alloc].happy_numbers.unfulfilled_wish5,
+                 # WBS Change
+                 allocations[alloc].happy_numbers.wbs_change
                  ])
         else:
             ws.append([allocations[alloc].hh_id, allocations[alloc].wg_id])
@@ -85,9 +99,9 @@ def save_data_to_xlsx(file, hh_wishes, flats, allocations, max_happiness, swappi
 
     # Formatiere Daten als Tabelle
     if not swapping:
-        tab = Table(displayName="Allocations", ref="A4:" + get_column_letter(18) + str(counter))
+        tab = Table(displayName="Allocations", ref="A4:" + get_column_letter(27) + str(counter))
     else:
-        tab = Table(displayName="Allocations_neu", ref="A4:" + get_column_letter(18) + str(counter))
+        tab = Table(displayName="Allocations_neu", ref="A4:" + get_column_letter(27) + str(counter))
 
     # Lege Tabellen Stil fest (striped rows and banded columns)
     style = TableStyleInfo(name="TableStyleMedium2", showFirstColumn=False,
@@ -97,14 +111,14 @@ def save_data_to_xlsx(file, hh_wishes, flats, allocations, max_happiness, swappi
     # füge neues Datenblatt zur Datei hinzu
     ws.add_table(tab)
 
-    # Färbe Spalte grau
-    # for cell in ws['K5:K' + str(counter)]:
-    #     cell[0].fill = PatternFill("solid", start_color="D9D9D9")
-    # ws.column_dimensions["K"].width = 3
-
     # lege Spaltenbreite pauschal fest
-    for i in range(1, 17):  # ,1 to start at 1
+    for i in range(1, 30):  # ,1 to start at 1
         ws.column_dimensions[get_column_letter(i)].width = 10
+
+    # Färbe Spalte grau
+    for cell in ws['U5:U' + str(counter)]:
+        cell[0].fill = PatternFill("solid", start_color="D9D9D9")
+    # ws.column_dimensions["T"].width = 3
 
     # lege Dateinamen fest
     if not swapping:
@@ -118,5 +132,5 @@ def save_data_to_xlsx(file, hh_wishes, flats, allocations, max_happiness, swappi
 
 
 def save_allocation(allocations, suffix):
-    with open("datasources/allocations_" + suffix + ".pkl", "wb") as out:
+    with open("datasources/allocations_" + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + "_" + suffix + ".pkl", "wb") as out:
         pickle.dump(allocations, out, pickle.HIGHEST_PROTOCOL)

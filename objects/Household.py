@@ -6,6 +6,8 @@ class Household(object):
     id = None
     name = None
     flat_type = None
+    wbs = None
+    engagement = None
 
     punkt = None
     punkt_weight = None
@@ -53,6 +55,8 @@ class Household(object):
                  param_id,
                  name,
                  flat_type,
+                 wbs,
+                 engagement,
                  punkt, punkt_weight,
                  winkel, winkel_weight,
                  riegel, riegel_weight,
@@ -70,6 +74,8 @@ class Household(object):
         self.id = param_id
         self.name = name
         self.flat_type = flat_type
+        self.wbs = wbs
+        self.engagement = engagement
         self.punkt = punkt
         self.punkt_weight = punkt_weight
         self.winkel = winkel
