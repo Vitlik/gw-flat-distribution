@@ -15,11 +15,14 @@ list_allocations = {}  # Format: "Haushalts ID" : "Wohnungs ID"
 
 
 if __name__ == '__main__':
+
+    path = "D:/HomeOnD/NC/Projekte/gw-wohnvergabe-datasources"
+
     if len(sys.argv) > 1:
         file = sys.argv[1]
     else:
-        file = "datasources/2022-08-18_results-survey2704(1)_korrigiert_2022-08-18_18-12-13_437.2062.xlsx"
-        file2 = "datasources/WgDaten.xlsx"
+        file = path + "/2022-08-18_results-survey2704(1)_korrigiert_2022-08-19_14-53-54_654.1313.xlsx"
+        file2 = path + "/WgDaten.xlsx"
 
     read_source(file, file2, list_hh_wishes, list_flats, list_weights, True)
 
@@ -27,7 +30,7 @@ if __name__ == '__main__':
     lastlast = file[0:last].rfind("_")
     x = file[0:lastlast].rfind("_")
     y = file.rfind(".xlsx")
-    pickel_file = "datasources/allocations_" + file[x+1:y] + ".pkl"
+    pickel_file = path + "/allocations_" + file[x+1:y] + ".pkl"
 
     if exists(pickel_file):
         print("Previous allocation found. Loading existing allocation: " + pickel_file)
