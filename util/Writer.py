@@ -131,6 +131,6 @@ def save_data_to_xlsx(file, hh_wishes, flats, allocations, weights, max_happines
     print("File saved: " + new_file_name)
 
 
-def save_allocation(allocations, suffix):
-    with open("datasources/allocations_" + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + "_" + suffix + ".pkl", "wb") as out:
+def save_allocation(allocations, suffix, path):
+    with open(path + "/allocations_" + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + "_" + suffix + ".pkl", "wb") as out:
         pickle.dump(allocations, out, pickle.HIGHEST_PROTOCOL)
