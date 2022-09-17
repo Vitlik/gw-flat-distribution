@@ -34,8 +34,11 @@ def main_method(id):
         # save_allocation(list_allocations, "init")
 
     list_allocations = optimize_allocations(list_hh_wishes, list_flats, list_weights, list_allocations)
+
     max_happiness = calc_happiness(list_hh_wishes, list_flats, list_weights, list_allocations)
+
     list_allocations = check_unfulfilled_wishes(list_hh_wishes, list_flats, list_weights, list_allocations)
+
     save_allocation(list_allocations, str(round(max_happiness, 4)), path)
     save_data_to_xlsx(file, list_hh_wishes, list_flats, list_allocations, list_weights, max_happiness, "")
 

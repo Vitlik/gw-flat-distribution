@@ -3,6 +3,9 @@ import sys
 import pickle
 
 from os.path import exists
+
+from objects.Allocation import Allocation
+from objects.HappyNumbers import HappyNumbers
 from util.Calculator import calc_happiness, check_unfulfilled_wishes, compare_allocations
 from util.Writer import save_data_to_xlsx, save_allocation
 from util.helper import swap_flats
@@ -21,7 +24,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         file = sys.argv[1]
     else:
-        file = path + "/2022-08-19_allocations_2_nach_Tausch_Excel.xlsx"
+        file = path + "/2022-08-22_allocations_2_nach_Tausch_Excel - Kopie.xlsx"
         file2 = path + "/WgDaten.xlsx"
 
     read_source(file, file2, list_hh_wishes, list_flats, list_weights, True)
@@ -30,7 +33,7 @@ if __name__ == '__main__':
     lastlast = file[0:last].rfind("_")
     x = file[0:lastlast].rfind("_")
     y = file.rfind(".xlsx")
-    pickel_file = path + "/2022-08-19_allocations_2_nach_Tausch.pkl"
+    pickel_file = path + "/2022-08-22_allocations_2_nach_Tausch.pkl"
 
     if exists(pickel_file):
         print("Previous allocation found. Loading existing allocation: " + pickel_file)
@@ -41,51 +44,64 @@ if __name__ == '__main__':
 
     old_allocation = copy.deepcopy(list_allocations)
 
-    # hh1 = 4; hh2 = 65  # Thorsten und Sabine
-    # hh1 = 19; hh2 = 1109  # Detlev und freie Wohnung
-    # hh1 = 36; hh2 = 63  # Jeanette und Kallmeyer, Ruth
-    # hh1 = 36; hh2 = 88  # Jeanette und Tim Többe
-    # hh1 = 61; hh2 = 94  # Linder, Liane und Penselin, Ulrike
-    # hh1 = 43; hh2 = 3106  # Schätz, Gabriela und frei
+    list_allocations[208] = Allocation(208, "W.111")
+    list_allocations[208].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    del list_allocations[3003]
 
-    # Riegel
-    hh1 = 28; hh2 = 17
-    swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    list_allocations[209] = Allocation(209, "W.209")
+    list_allocations[209].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    del list_allocations[3209]
 
-    hh1 = 17; hh2 = 1107
-    swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    list_allocations[210] = Allocation(210, "R.009")
+    list_allocations[210].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-    hh1 = 50; hh2 = 1211
-    swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    list_allocations[40] = Allocation(40, "R.010")
+    list_allocations[40].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-    hh1 = 92; hh2 = 1110  # Marianne Witt & frei
-    swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    list_allocations[1011] = Allocation(1011, "R.011")
+    list_allocations[1011].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-    hh1 = 85; hh2 = 1110  # roth & frei
-    swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    list_allocations[211] = Allocation(211, "R.012")
+    list_allocations[211].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-    # Punkt
-    hh1 = 202; hh2 = 2103  # drovs & frei
-    swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    list_allocations[1013] = Allocation(1013, "R.013")
+    list_allocations[1013].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-    hh1 = 114; hh2 = 88
-    swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    list_allocations[1014] = Allocation(1014, "R.014")
+    list_allocations[1014].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-    hh1 = 88; hh2 = 96
-    swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    list_allocations[1015] = Allocation(1015, "R.015")
+    list_allocations[1015].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-    hh1 = 115; hh2 = 3101  # drovs & frei
-    swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    list_allocations[1016] = Allocation(1016, "R.016")
+    list_allocations[1016].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+    list_allocations[1017] = Allocation(1017, "R.017")
+    list_allocations[1017].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+    list_allocations[212] = Allocation(212, "R.104")
+    list_allocations[212].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    del list_allocations[1213]
+
+    list_allocations[213] = Allocation(213, "R.107")
+    list_allocations[213].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    del list_allocations[1109]
+
+    list_allocations[214] = Allocation(214, "R.108")
+    list_allocations[214].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
     max_happiness = calc_happiness(list_hh_wishes, list_flats, list_weights, list_allocations)
 
     list_allocations = check_unfulfilled_wishes(list_hh_wishes, list_flats, list_weights, list_allocations)
 
-    diff_allocations = compare_allocations(list_allocations, old_allocation)
+    # für Tausch
+    # diff_allocations = compare_allocations(list_allocations, old_allocation)
+    # save_data_to_xlsx(file, list_hh_wishes, list_flats, list_allocations, list_weights, max_happiness, "tausch_" +
+    #                   str(hh1) + "-" + str(hh2) + "_neu")
+    # save_data_to_xlsx(file, list_hh_wishes, list_flats, diff_allocations, list_weights, max_happiness, "tausch_" +
+    #                   str(hh1) + "-" + str(hh2) + "_diff")
 
-    save_data_to_xlsx(file, list_hh_wishes, list_flats, list_allocations, list_weights, max_happiness, "tausch_" +
-                      str(hh1) + "-" + str(hh2) + "_neu")
-    save_data_to_xlsx(file, list_hh_wishes, list_flats, diff_allocations, list_weights, max_happiness, "tausch_" +
-                      str(hh1) + "-" + str(hh2) + "_diff")
+    # für anderes
+    save_data_to_xlsx(file, list_hh_wishes, list_flats, list_allocations, list_weights, max_happiness, "")
 
     save_allocation(list_allocations, str(round(max_happiness, 4))+"_swapped", path)
