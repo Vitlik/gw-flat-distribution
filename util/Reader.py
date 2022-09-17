@@ -94,7 +94,7 @@ def read_source(file, file2, list_hh_wishes, list_flats, list_weights, weights_f
             list_weights[config[first_col_gew + str(row)].value] = float(config[last_col_gew + str(row)].value)
     else:
         ws_alloc = wb["Zuordnungen"]
-        for col in range(5,24):
+        for col in range(5,25):
             list_weights[ws_alloc[get_column_letter(col) + str(1)].value] = float(ws_alloc[get_column_letter(col) + str(2)].value)
 
 def read_results(file, allocations):

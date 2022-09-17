@@ -45,9 +45,38 @@ if __name__ == '__main__':
     # hh1 = 19; hh2 = 1109  # Detlev und freie Wohnung
     # hh1 = 36; hh2 = 63  # Jeanette und Kallmeyer, Ruth
     # hh1 = 36; hh2 = 88  # Jeanette und Tim Többe
-    hh1 = 61; hh2 = 94  # Linder, Liane und Penselin, Ulrike
+    # hh1 = 61; hh2 = 94  # Linder, Liane und Penselin, Ulrike
+    # hh1 = 43; hh2 = 3106  # Schätz, Gabriela und frei
 
-    swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    # Riegel
+    # hh1 = 28; hh2 = 17
+    # swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    # #
+    # hh1 = 17; hh2 = 1107
+    # swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    #
+    # hh1 = 50; hh2 = 1211
+    # swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    #
+    # hh1 = 114; hh2 = 88
+    # swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    #
+    # hh1 = 88; hh2 = 96
+    # swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    #
+    # hh1 = 92; hh2 = 1110  # Marianne Witt & frei
+    # swap_flats(hh1, hh2, list_allocations, list_flats)  #
+    #
+    # hh1 = 85; hh2 = 1110  # roth & frei
+    # swap_flats(hh1, hh2, list_allocations, list_flats)  #
+
+    # Punkt
+    # hh1 = 115; hh2 = 3101  # drovs & frei
+    # swap_flats(hh1, hh2, list_allocations, list_flats)  #
+
+    # Winkel
+    # hh1 = 116; hh2 = 3212  # drovs & frei
+    # swap_flats(hh1, hh2, list_allocations, list_flats)  #
 
     max_happiness = calc_happiness(list_hh_wishes, list_flats, list_weights, list_allocations)
 

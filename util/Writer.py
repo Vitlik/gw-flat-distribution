@@ -23,12 +23,12 @@ def save_data_to_xlsx(file, hh_wishes, flats, allocations, weights, max_happines
 
     ws.append(["Maximales Glück:", "", "", "Gewichte:", "Punkt",	"Winkel",	"Riegel",	"EG",	"1OG",	"2OG",	"3OG",
               "Nachbar",	"kleine_wg",	"Hund",	"Hundeallergie",	"Katze",	"Katzenallergie",	"konkrete_wg1",
-              "konkrete_wg2",	"konkrete_wg3",	"rollitauglich",	"Raucher",	"WBS-AB"])
+              "konkrete_wg2",	"konkrete_wg3",	"rollitauglich",	"Raucher",	"WBS-AB",	"WBS-AB"])
     ws.append([round(max_happiness, 4), "", "", "", weights["Punkt"],	weights["Winkel"],	weights["Riegel"],
               weights["EG"],	weights["1OG"],	weights["2OG"],	weights["3OG"],	weights["Nachbar"],	weights["kleine_wg"],
               weights["Hund"],	weights["Hundeallergie"],	weights["Katze"],	weights["Katzenallergie"],
               weights["konkrete_wg1"],	weights["konkrete_wg2"],	weights["konkrete_wg3"],	weights["rollitauglich"],
-              weights["Raucher"],	weights["WBS-AB"]])
+              weights["Raucher"],	weights["WBS-AB"],	weights["EngagementMultiplikator"]])
     ws.append([""])
     tabHead = Table(displayName="weights", ref="D1:" + get_column_letter(23) + "2")
 
