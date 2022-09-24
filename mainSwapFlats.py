@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     old_allocation = copy.deepcopy(list_allocations)
 
-    hh1 = 44; hh2 = 3201
+    hh1 = 92; hh2 = 31
     swap_flats(hh1, hh2, list_allocations, list_flats)
 
     # Neuen Haushalt hinzufügen
@@ -66,4 +66,4 @@ if __name__ == '__main__':
     # für anderes
     # save_data_to_xlsx(file, list_hh_wishes, list_flats, list_allocations, list_weights, max_happiness, "")
 
-    save_allocation(list_allocations, str(round(max_happiness, 4))+"_swapped", path)
+    # save_allocation(list_allocations, str(round(max_happiness, 4))+"_swapped", path)

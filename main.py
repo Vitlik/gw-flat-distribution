@@ -18,12 +18,12 @@ def main_method(id):
 
     path = "D:/HomeOnD/NC/Projekte/gw-wohnvergabe-datasources"
 
-    file = path + "/2022-08-18_results-survey2704(1)_korrigiert.xlsx"
+    file = path + "/2022-08-22_allocations_3_nach_NeuVerg_und_AttAusVerg_Excel.xlsx"
     file2 = path + "/WgDaten.xlsx"
 
     read_source(file, file2, list_hh_wishes, list_flats, list_weights)
 
-    pickel_file = path + "/neu.pkl"
+    pickel_file = path + "/2022-08-22_allocations_3_nach_NeuVerg_und_AttAusVerg.pkl"
     if exists(pickel_file):
         print("Previous allocation found. Loading existing allocation: " + pickel_file)
         with open(pickel_file, "rb") as inp:
@@ -33,7 +33,7 @@ def main_method(id):
         init_distribution(list_hh_wishes, list_flats, list_allocations)
         # save_allocation(list_allocations, "init")
 
-    list_allocations = optimize_allocations(list_hh_wishes, list_flats, list_weights, list_allocations)
+    # list_allocations = optimize_allocations(list_hh_wishes, list_flats, list_weights, list_allocations)
 
     max_happiness = calc_happiness(list_hh_wishes, list_flats, list_weights, list_allocations)
 
@@ -48,7 +48,7 @@ if __name__ == '__main__':
     print("Start: " + str(full_start))
     # for i in range(20):
     with Pool(10) as p:
-        p.map(main_method, range(0, 20))
+        p.map(main_method, range(0, 1))
 
     print("--------------------------------------")
     print("Ende: " + str(datetime.now()))

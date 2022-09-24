@@ -598,8 +598,8 @@ def check_unfulfilled_wishes(hh_wishes, flats, weights, allocations):
             # WBS
             if hh.wbs != flat.wbs:
                 local_allocations[alloc].happy_numbers.wbs_change = "Wohnung " + str(local_allocations[alloc].wg_id) + \
-                                                                    " war eine WBS " + flat.wbs + " Wohnung und muss " + \
-                                                                    "eine WBS " + hh.wbs + " Wohnung werden."
+                                                                    " war eine WBS " + str(flat.wbs) + " Wohnung und muss " + \
+                                                                    "eine WBS " + str(hh.wbs) + " Wohnung werden."
 
     return local_allocations
 

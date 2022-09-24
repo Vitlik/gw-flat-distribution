@@ -40,7 +40,7 @@ def save_data_to_xlsx(file, hh_wishes, flats, allocations, weights, max_happines
     ws["A2"].alignment = Alignment(horizontal='center')
     ws["A2"].fill = PatternFill("solid", start_color="92D050")
 
-    ws.append(["HaushaltsID", "WohnungsID", "Name", "Größe", "Summe",
+    ws.append(["HaushaltsID", "WohnungsID", "Name", "Größe", "WBS1", "Summe",
                "Punkt_Glück", "Winkel_Glück", "Riegel_Glück", "EG_Glück", "OG1_Glück", "OG2_Glück", "OG3_Glück",
                "kleiWg_Glück", "Rolli_Glück", "Nachbar_Glück", "HundNähe_Glück", "KatzenNähe_Glück", "RaucherNähe_Glück",
                "Wg_Glück", "WBS", " ",
@@ -57,6 +57,7 @@ def save_data_to_xlsx(file, hh_wishes, flats, allocations, weights, max_happines
                  allocations[alloc].wg_id,
                  hh_wishes[alloc].name,
                  flats[allocations[alloc].wg_id].flat_type,
+                 hh_wishes[alloc].wbs,
                  # sum column
                  allocations[alloc].happy_numbers.sum,
                  # building wish
@@ -94,14 +95,15 @@ def save_data_to_xlsx(file, hh_wishes, flats, allocations, weights, max_happines
                  allocations[alloc].happy_numbers.wbs_change
                  ])
         else:
-            ws.append([allocations[alloc].hh_id, allocations[alloc].wg_id])
+            ws.append([allocations[alloc].hh_id, allocations[alloc].wg_id, "",
+                       str(flats[allocations[alloc].wg_id].flat_type), flats[allocations[alloc].wg_id].wbs])
         counter += 1
 
     # Formatiere Daten als Tabelle
     if not swapping:
-        tab = Table(displayName="Allocations", ref="A4:" + get_column_letter(27) + str(counter))
+        tab = Table(displayName="Allocations", ref="A4:" + get_column_letter(28) + str(counter))
     else:
-        tab = Table(displayName="Allocations_neu", ref="A4:" + get_column_letter(27) + str(counter))
+        tab = Table(displayName="Allocations_neu", ref="A4:" + get_column_letter(28) + str(counter))
 
     # Lege Tabellen Stil fest (striped rows and banded columns)
     style = TableStyleInfo(name="TableStyleMedium2", showFirstColumn=False,
@@ -112,13 +114,13 @@ def save_data_to_xlsx(file, hh_wishes, flats, allocations, weights, max_happines
     ws.add_table(tab)
 
     # lege Spaltenbreite pauschal fest
-    for i in range(1, 30):  # ,1 to start at 1
+    for i in range(1, 31):  # ,1 to start at 1
         ws.column_dimensions[get_column_letter(i)].width = 10
 
     # Färbe Spalte grau
-    for cell in ws['U5:U' + str(counter)]:
+    for cell in ws['V5:V' + str(counter)]:
         cell[0].fill = PatternFill("solid", start_color="D9D9D9")
-    # ws.column_dimensions["T"].width = 3
+    ws.column_dimensions["V"].width = 3
 
     # lege Dateinamen fest
     if not swapping:
