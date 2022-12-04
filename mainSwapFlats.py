@@ -40,8 +40,8 @@ if __name__ == '__main__':
     old_allocation = copy.deepcopy(list_allocations)
 
     # Vorlage - Tausch
-    # hh1 = 86; hh2 = 2101
-    # swap_flats(hh1, hh2, list_allocations, list_flats)
+    hh1 = 86; hh2 = 2101
+    swap_flats(hh1, hh2, list_allocations, list_flats)
 
     # Vorlage - Neuen Haushalt hinzufügen
     # list_allocations[216] = Allocation(216, "P.107")
