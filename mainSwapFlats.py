@@ -40,8 +40,8 @@ if __name__ == '__main__':
     old_allocation = copy.deepcopy(list_allocations)
 
     # Vorlage - Tausch
-    hh1 = 86; hh2 = 2101
-    swap_flats(hh1, hh2, list_allocations, list_flats)
+    # hh1 = 86; hh2 = 2101
+    # swap_flats(hh1, hh2, list_allocations, list_flats)
 
     # Vorlage - Neuen Haushalt hinzufügen
     # list_allocations[216] = Allocation(216, "P.107")
@@ -49,20 +49,26 @@ if __name__ == '__main__':
     # old_allocation[216] = Allocation(216, "P.107")
     # old_allocation[216].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     # del list_allocations[2207] # bisherige Wohnungszuordnung entfernen
+    
+    ## Haushalt löschen
+    # Haushalt Lehmann springt ab
+    # list_allocations[9204] = Allocation(9204, "P.103")
+    # list_allocations[9204].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    # del list_allocations[204]
+    # del list_hh_wishes[204]
 
     # Vorlage - Haushalt abgesprungen
     # Rohmann springt ab
-    list_allocations[9012] = Allocation(9012, "W.012")
-    old_allocation[9012] = Allocation(9012, "W.012")
-    del list_allocations[116] # bisherige Wohnungszuordnung entfernen
-    del old_allocation[116] # bisherige Wohnungszuordnung entfernen
-    
+    # list_allocations[9012] = Allocation(9012, "W.012")
+    # old_allocation[9012] = Allocation(9012, "W.012")
+    # del list_allocations[116] # bisherige Wohnungszuordnung entfernen
+    # del old_allocation[116] # bisherige Wohnungszuordnung entfernen
     
     # Vorlage - Haushalt wechselt WBS Status - hier ist nichts zu tun, da die WBS Status nicht in der Zuordnung gespeichert werden
     # Stattdessen ist der WBS Status des Haushalts in der Excel "Haushaltsübersicht" zu ändern.
     # Schlattmann wechselt von frei zu WBS und Wohnung
-    hh1 = 103; hh2 = 9012
-    swap_flats(hh1, hh2, list_allocations, list_flats)
+    # hh1 = 103; hh2 = 9012
+    # swap_flats(hh1, hh2, list_allocations, list_flats)
 
     
     # Neuberechnung
