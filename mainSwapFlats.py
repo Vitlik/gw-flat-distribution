@@ -24,16 +24,11 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         file = sys.argv[1]
     else:
-        file = path + "/2022-08-22_allocations_3_nach_NeuVerg_und_AttAusVerg_Excel.xlsx"
-        file2 = path + "/WgDaten.xlsx"
+        pickel_file = path + "/2022-11-19_allocations_5.pkl"
+        xlsx        = path + "/2022-12-04_allocations_6_tmp.xlsx"
+        wgDaten       = path + "/WgDaten.xlsx"
 
-    read_source(file, file2, list_hh_wishes, list_flats, list_weights, True)
-
-    last = file.rfind("_")
-    lastlast = file[0:last].rfind("_")
-    x = file[0:lastlast].rfind("_")
-    y = file.rfind(".xlsx")
-    pickel_file = path + "/2022-08-22_allocations_3_nach_NeuVerg_und_AttAusVerg.pkl"
+    read_source(xlsx, wgDaten, list_hh_wishes, list_flats, list_weights, True)
 
     if exists(pickel_file):
         print("Previous allocation found. Loading existing allocation: " + pickel_file)
@@ -44,24 +39,49 @@ if __name__ == '__main__':
 
     old_allocation = copy.deepcopy(list_allocations)
 
-    hh1 = 92; hh2 = 31
+    # Vorlage - Tausch
+    hh1 = 86; hh2 = 2101
     swap_flats(hh1, hh2, list_allocations, list_flats)
 
-    # Neuen Haushalt hinzufügen
-    # list_allocations[209] = Allocation(209, "W.209")
-    # list_allocations[209].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    # del list_allocations[3209]  # bisherige Wohnungszuordnung entfernen
+    # Vorlage - Neuen Haushalt hinzufügen
+    # list_allocations[216] = Allocation(216, "P.107")
+    # list_allocations[216].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    # old_allocation[216] = Allocation(216, "P.107")
+    # old_allocation[216].happy_numbers = HappyNumbers(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    # del list_allocations[2207] # bisherige Wohnungszuordnung entfernen
 
+    # Vorlage - Haushalt abgesprungen
+    # Rohmann springt ab
+    list_allocations[9012] = Allocation(9012, "W.012")
+    old_allocation[9012] = Allocation(9012, "W.012")
+    del list_allocations[116] # bisherige Wohnungszuordnung entfernen
+    del old_allocation[116] # bisherige Wohnungszuordnung entfernen
+    
+    
+    # Vorlage - Haushalt wechselt WBS Status - hier ist nichts zu tun, da die WBS Status nicht in der Zuordnung gespeichert werden
+    # Stattdessen ist der WBS Status des Haushalts in der Excel "Haushaltsübersicht" zu ändern.
+    # Schlattmann wechselt von frei zu WBS und Wohnung
+    hh1 = 103; hh2 = 9012
+    swap_flats(hh1, hh2, list_allocations, list_flats)
+
+    
+    # Neuberechnung
     max_happiness = calc_happiness(list_hh_wishes, list_flats, list_weights, list_allocations)
-
     list_allocations = check_unfulfilled_wishes(list_hh_wishes, list_flats, list_weights, list_allocations)
 
-    # für Tausch
+    # Berechnung Auswirkungen der Änderungen
     diff_allocations = compare_allocations(list_allocations, old_allocation)
-    save_data_to_xlsx(file, list_hh_wishes, list_flats, list_allocations, list_weights, max_happiness, "tausch_" +
-                      str(hh1) + "-" + str(hh2) + "_neu")
-    save_data_to_xlsx(file, list_hh_wishes, list_flats, diff_allocations, list_weights, max_happiness, "tausch_" +
-                      str(hh1) + "-" + str(hh2) + "_diff")
+    
+    # Speichere Wohnungstausch
+    try:
+        save_data_to_xlsx(xlsx, list_hh_wishes, list_flats, list_allocations, list_weights, max_happiness, "tausch_" +
+                    str(hh1) + "-" + str(hh2) + "_neu")
+        save_data_to_xlsx(xlsx, list_hh_wishes, list_flats, diff_allocations, list_weights, max_happiness, "tausch_" +
+                          str(hh1) + "-" + str(hh2) + "_diff")
+    except NameError:
+        save_data_to_xlsx(xlsx, list_hh_wishes, list_flats, list_allocations, list_weights, max_happiness, "neu")
+        save_data_to_xlsx(xlsx, list_hh_wishes, list_flats, diff_allocations, list_weights, max_happiness, "neu_diff")
+        
 
     # für anderes
     # save_data_to_xlsx(file, list_hh_wishes, list_flats, list_allocations, list_weights, max_happiness, "")
